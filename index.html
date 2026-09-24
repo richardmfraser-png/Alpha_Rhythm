@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#BF002D" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Alpha Rhythm" />
+  <meta name="description" content="Alpha Rhythm - a simple semester self-management app for music students." />
+  <title>Alpha Rhythm</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="appShell" class="app-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <img class="brand-logo" src="assets/alpha-boys-school-logo.png" alt="" aria-hidden="true" />
+        <div>
+          <div id="brandName" class="brand-name">Alpha Rhythm</div>
+          <div id="brandTagline" class="brand-tagline">Practice. Purpose. Progress.</div>
+        </div>
+      </div>
+      <button id="profileButton" class="profile-button" type="button" aria-label="Open profile and settings">
+        <span id="profileInitials">ST</span>
+      </button>
+    </header>
+
+    <main class="main-content">
+      <section id="todayView" class="view active" data-view="today">
+        <div class="hero-card">
+          <div>
+            <div id="programDay" class="eyebrow">SEMESTER ROUTINE</div>
+            <h1 id="todayHeading">Today</h1>
+            <p id="todaySubheading" class="muted">Show up. Do the work. Notice the progress.</p>
+          </div>
+          <div class="score-ring" aria-label="Daily completion">
+            <span id="todayScore">0%</span>
+          </div>
+        </div>
+
+        <div class="date-nav card compact">
+          <button id="prevDay" type="button" class="icon-button" aria-label="Previous day">&#8592;</button>
+          <label class="date-label" for="activeDate">
+            <span class="sr-only">Choose date</span>
+            <input id="activeDate" type="date" />
+          </label>
+          <button id="nextDay" type="button" class="icon-button" aria-label="Next day">&#8594;</button>
+        </div>
+
+        <section class="card">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">START WITH INTENTION</div>
+              <h2>Morning focus</h2>
+            </div>
+            <span class="pill">1 minute</span>
+          </div>
+          <label for="morningIntention">What matters most today?</label>
+          <textarea id="morningIntention" rows="2" placeholder="Example: Be fully prepared for rehearsal and stay focused on timing."></textarea>
+        </section>
+
+        <section class="card">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">MY 3</div>
+              <h2>Three deliverables</h2>
+            </div>
+            <span id="priorityCount" class="pill">0 / 3</span>
+          </div>
+          <p class="muted small">Choose three concrete things that make today successful.</p>
+          <div id="priorityList" class="priority-list"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">DAILY RHYTHM</div>
+              <h2>Core commitments</h2>
+            </div>
+            <button id="resetTargetsLink" class="text-button" type="button">Targets</button>
+          </div>
+          <div id="habitGrid" class="habit-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">CLOSE THE LOOP</div>
+              <h2>Evening reflection</h2>
+            </div>
+            <span class="pill">2 minutes</span>
+          </div>
+          <label for="dailyWin">One win from today</label>
+          <input id="dailyWin" type="text" placeholder="What went well?" />
+          <label for="dailyChallenge">One thing to improve tomorrow</label>
+          <input id="dailyChallenge" type="text" placeholder="Keep it specific and useful." />
+          <label for="dailyReflection">Private reflection <span class="muted">(not shared by default)</span></label>
+          <textarea id="dailyReflection" rows="3" placeholder="Optional notes, thoughts or gratitude."></textarea>
+        </section>
+
+        <div class="encouragement card soft">
+          <strong>No leaderboard.</strong> Your job is to keep the promises you make to yourself.
+        </div>
+      </section>
+
+      <section id="goalsView" class="view" data-view="goals">
+        <div class="page-title">
+          <div class="eyebrow">SEMESTER DIRECTION</div>
+          <h1>Goals</h1>
+          <p class="muted">Connect the daily routine to something that matters.</p>
+        </div>
+        <section class="card">
+          <div class="section-heading-row">
+            <h2>My semester goals</h2>
+            <button id="addGoal" class="primary-button small-button" type="button">+ Add goal</button>
+          </div>
+          <div id="goalList" class="goal-list"></div>
+        </section>
+        <section class="card soft">
+          <h3>A useful goal is...</h3>
+          <p class="muted">Specific enough to act on, meaningful enough to care about, and visible enough to review every week.</p>
+        </section>
+      </section>
+
+      <section id="progressView" class="view" data-view="progress">
+        <div class="page-title">
+          <div class="eyebrow">YOUR OWN TRENDLINE</div>
+          <h1>Progress</h1>
+          <p class="muted">Consistency beats intensity that disappears after a few days.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><span id="statAvg">0%</span><small>7-day average</small></div>
+          <div class="stat-card"><span id="statStreak">0</span><small>day streak</small></div>
+          <div class="stat-card"><span id="statPractice">0</span><small>practice min / 7 days</small></div>
+          <div class="stat-card"><span id="statLogged">0</span><small>days logged / 7</small></div>
+        </div>
+        <section class="card">
+          <div class="section-heading-row">
+            <h2>Last 7 days</h2>
+            <span class="pill">completion</span>
+          </div>
+          <div id="sevenDayChart" class="bar-chart" aria-label="Seven day completion chart"></div>
+        </section>
+        <section class="card">
+          <h2>Semester totals</h2>
+          <div id="semesterTotals" class="totals-list"></div>
+        </section>
+      </section>
+
+      <section id="weeklyView" class="view" data-view="weekly">
+        <div class="page-title">
+          <div class="eyebrow">WEEKLY RESET</div>
+          <h1>Weekly check-in</h1>
+          <p class="muted">A short review for you - and, if you choose, your mentor.</p>
+        </div>
+        <section class="card">
+          <label for="weeklyFocus">What was the main focus this week?</label>
+          <input id="weeklyFocus" type="text" placeholder="Example: Time feel, sight-reading and punctuality." />
+          <label for="weeklyReflection">What did you learn about your habits?</label>
+          <textarea id="weeklyReflection" rows="4" placeholder="What helped? What got in the way?"></textarea>
+          <label for="nextWeekFocus">One adjustment for next week</label>
+          <input id="nextWeekFocus" type="text" placeholder="One realistic change." />
+          <button id="saveWeekly" class="primary-button" type="button">Save weekly check-in</button>
+        </section>
+        <section class="card">
+          <div class="section-heading-row">
+            <div>
+              <div class="eyebrow">SHAREABLE</div>
+              <h2>Mentor summary</h2>
+            </div>
+            <span class="pill">private notes excluded</span>
+          </div>
+          <pre id="mentorSummary" class="summary-box"></pre>
+          <div class="button-row">
+            <button id="copySummary" class="secondary-button" type="button">Copy summary</button>
+            <button id="downloadSummary" class="secondary-button" type="button">Download .txt</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="settingsView" class="view" data-view="settings">
+        <div class="page-title">
+          <div class="eyebrow">MAKE IT YOURS</div>
+          <h1>Settings</h1>
+          <p class="muted">The pilot stores information on this device only.</p>
+        </div>
+        <section class="card">
+          <h2>Student profile</h2>
+          <div class="form-grid">
+            <div><label for="profileName">Name</label><input id="profileName" type="text" /></div>
+            <div><label for="profileInstrument">Instrument / pathway</label><input id="profileInstrument" type="text" /></div>
+            <div><label for="profileMentor">Mentor / lecturer</label><input id="profileMentor" type="text" /></div>
+            <div><label for="profileStart">Semester start</label><input id="profileStart" type="date" /></div>
+            <div><label for="profileWeeks">Semester length (weeks)</label><input id="profileWeeks" type="number" min="1" max="52" /></div>
+          </div>
+          <button id="saveProfile" class="primary-button" type="button">Save profile</button>
+        </section>
+        <section class="card">
+          <h2>Daily targets</h2>
+          <div id="targetSettings" class="form-grid"></div>
+          <p class="muted small">These are starting points, not universal rules. Alpha staff can set the final programme targets.</p>
+          <button id="saveTargets" class="primary-button" type="button">Save targets</button>
+        </section>
+        <section class="card">
+          <h2>Data & privacy</h2>
+          <label class="toggle-row"><input id="includePrivate" type="checkbox" /> Include private reflections in CSV exports</label>
+          <p class="muted small">Mentor summaries never include the private daily reflection.</p>
+          <div class="button-row wrap">
+            <button id="exportCsv" class="secondary-button" type="button">Export CSV</button>
+            <button id="exportJson" class="secondary-button" type="button">Backup JSON</button>
+            <label class="secondary-button file-button" for="importJson">Restore JSON<input id="importJson" type="file" accept="application/json" /></label>
+          </div>
+        </section>
+        <section class="card danger-zone">
+          <h2>Reset</h2>
+          <p class="muted small">This permanently clears this device's Alpha Rhythm data.</p>
+          <button id="clearData" class="danger-button" type="button">Clear all data</button>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Primary navigation">
+      <button type="button" class="nav-item active" data-target="today"><span>Today</span></button>
+      <button type="button" class="nav-item" data-target="goals"><span>Goals</span></button>
+      <button type="button" class="nav-item" data-target="progress"><span>Progress</span></button>
+      <button type="button" class="nav-item" data-target="weekly"><span>Weekly</span></button>
+      <button type="button" class="nav-item" data-target="settings"><span>Settings</span></button>
+    </nav>
+  </div>
+
+  <dialog id="onboardingDialog" class="onboarding-dialog">
+    <form method="dialog" id="onboardingForm">
+      <img class="brand-logo large" src="assets/alpha-boys-school-logo.png" alt="Alpha Boys' School" />
+      <div class="eyebrow">WELCOME</div>
+      <h1>Build your rhythm.</h1>
+      <p class="muted">A simple semester system for practice, study, wellbeing and self-direction.</p>
+      <label for="onboardName">Your name</label>
+      <input id="onboardName" required type="text" autocomplete="name" placeholder="First and last name" />
+      <label for="onboardInstrument">Instrument / pathway</label>
+      <input id="onboardInstrument" type="text" placeholder="Example: Drums, bass, music technology" />
+      <label for="onboardStart">Semester start date</label>
+      <input id="onboardStart" required type="date" />
+      <button id="startProgram" class="primary-button full" value="default" type="submit">Start Alpha Rhythm</button>
+      <p class="muted micro">Your information stays on this device in this prototype.</p>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
